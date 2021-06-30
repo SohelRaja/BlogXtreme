@@ -180,6 +180,7 @@ const Profile = () => {
     return (
         <div className="profile">
             <br/>
+            <br/>
             <div className="profile-card" style={{borderBottom:"2px solid #ffffff"}}>
                 <div className="profile-card-plate">
                     <div className="profile-pic-plate">
