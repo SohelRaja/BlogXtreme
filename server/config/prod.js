@@ -1,8 +1,0 @@
-module.exports = {
-    MONGOURI: process.env.MONGOURI,
-    JWT_SECRET: process.env.JWT_SEC,
-    DEFAULT_PIC: process.env.DEFAULT_PIC,
-    CLOUD_NAME_CLOUDINARY: process.env.CLOUD_NAME_CLOUDINARY,
-    API_KEY_CLOUDINARY: process.env.API_KEY_CLOUDINARY,
-    API_SECRET_CLOUDINARY: process.env.API_SECRET_CLOUDINARY
-}

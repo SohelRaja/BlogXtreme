@@ -8,13 +8,10 @@ import Home from './components/screens/Home';
 import Signin from './components/screens/Signin';
 import Signup from './components/screens/Signup';
 import Profile from './components/screens/Profile';
-import UserProfile from './components/screens/UserProfile';
 import CreatePost from './components/screens/CreatePost';
 import EditPost from './components/screens/EditPost';
-import MyPost from './components/screens/MyPost';
-import SubscribeUsersPost from './components/screens/SubscribeUsersPosts';
 import NotFoundPage from './components/screens/NotFoundPage';
-import AdminPage from './components/screens/Admin';
+
 import {reducer, initialState} from './reducers/userReducer';
 
 export const UserContext = createContext();
@@ -23,8 +20,7 @@ const Routing = ()=>{
   const history = useHistory();
   const {state, dispatch} = useContext(UserContext);
   const user = JSON.parse(localStorage.getItem("user"));
-  useEffect(()=>{
-    
+  useEffect(()=>{ 
     if(user){
       dispatch({type:"USER", payload: user});
     }else{
@@ -51,12 +47,6 @@ const Routing = ()=>{
           </Route>
         </Switch>
       }
-      {
-        state && (user.priority === "owner" || user.priority === "admin") &&
-        <Route path="/admin">
-            <AdminPage />
-        </Route>
-      }
       {state ? 
         <Switch>
           <Route path="/profile" exact>
@@ -67,17 +57,6 @@ const Routing = ()=>{
           </Route>
           <Route path="/editpost/:postId">
             <EditPost />
-          </Route>
-          <Route path="/profile/:userId">
-            <UserProfile />
-          </Route>
-          <Route path="/myfeed">
-            <SubscribeUsersPost />
-          </Route>
-          <Route exact
-            path="/mypost/:id"
-            component={MyPost}
-          >
           </Route>
           <Route>
             <NotFoundPage />

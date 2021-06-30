@@ -18,109 +18,6 @@ const router = express.Router();
 const Post = mongoose.model('Post');
 const User = mongoose.model('User');
 
-router.get('/allusers',requireLogin,(req,res)=>{
-    if(req.user.priority === "admin" || req.user.priority === "owner"){
-        User.find()
-        .select("-password") // every things except password
-        .then((allusers)=>{
-            res.json({allusers})
-        })
-        .catch((err)=>{
-            console.log(err);
-        })
-    }else{
-        return res.status(422).json({error: "You don't have access to do."});
-    }
-    
-});
-
-router.put('/changetoadmin',requireLogin,(req,res)=>{
-    if(req.user.priority === "owner"){
-        User.findByIdAndUpdate(req.body.userId,{
-            priority: "admin"
-        },{
-            new: true
-        }).exec((err,result)=>{
-            if(err){
-                return res.status(422).json({error:err});
-            }else{
-                res.json(result);
-            }
-        })
-    }else{
-        return res.status(422).json({error: "You don't have access to do."});
-    }
-});
-
-router.put('/changetouser',requireLogin,(req,res)=>{
-    if(req.user.priority === "owner"){
-        User.findByIdAndUpdate(req.body.userId,{
-            priority: "normal"
-        },{
-            new: true
-        }).exec((err,result)=>{
-            if(err){
-                return res.status(422).json({error:err});
-            }else{
-                res.json(result);
-            }
-        })
-    }else{
-        return res.status(422).json({error: "You don't have access to do."});
-    }
-});
-
-router.get('/user/:userId',requireLogin,(req,res)=>{
-    User.findOne({_id: req.params.userId})
-    .select("-password") // every things except password
-    .then(user=>{
-        Post.find({postedBy: req.params.userId, privacy: "public"})
-        .populate("postedBy", "_id name")
-        .exec((err, posts)=>{
-            if(err){
-                return res.status(422).json({error: err})
-            }
-            res.json({user,posts})
-        })
-    }).catch(err=>{
-        return res.status(404).json({error: "User not found."});
-    })
-});
-
-router.put('/follow',requireLogin,(req,res)=>{
-    User.findByIdAndUpdate(req.body.followId,{
-        $push: {followers: req.user._id}
-    },{new:true},(err,data)=>{
-        if(err){
-            return res.status(422).json({error:err});
-        }
-        User.findByIdAndUpdate(req.user._id,{
-            $push: {following: req.body.followId}
-        },{new:true}).select("-password").then(result=>{
-            res.json(result)
-        }).catch(err=>{
-            return res.status(422).json({error:err})
-        })
-    })
-})
-
-router.put('/unfollow',requireLogin,(req,res)=>{
-    User.findByIdAndUpdate(req.body.unfollowId,{
-        $pull: {followers: req.user._id}
-    },{new:true},(err,data)=>{
-        if(err){
-            return res.status(422).json({error:err});
-        }
-        User.findByIdAndUpdate(req.user._id,{
-            $pull: {following: req.body.unfollowId}
-        },{new:true}).select("-password").then(result=>{
-            res.json(result)
-        }).catch(err=>{
-            return res.status(422).json({error:err})
-        })
-    })
-})
-
 router.put('/updatepic', requireLogin, async (req,res)=>{
     const pic = req.body.pic;
     if(!pic){
@@ -215,19 +112,5 @@ router.put('/changepassword', requireLogin, (req,res)=>{
         });
     })
 });
-
-router.post('/search-users',requireLogin, (req,res)=>{
-    if(!req.body.query){
-        return res.json({});
-    }
-    let userPattern = new RegExp("^"+req.body.query);
-    User.find({email: {$regex: userPattern}})
-    .select("_id email name priority")
-    .then(user=>{
-        res.json({user});
-    }).catch(err=>{
-        console.log(err);
-    })
-})
 
 module.exports = router;

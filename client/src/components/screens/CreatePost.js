@@ -32,7 +32,7 @@ const CreatePost = () =>{
                 if(data.error){
                     M.toast({html: data.error, classes: "#f44336 red"});
                 }else{
-                    M.toast({html: "Created post successfully.", classes: "#ab47bc purple lighten-1"});
+                    M.toast({html: "Created post successfully.", classes: "#607d8b blue-grey"});
                     history.push('/');
                 }
             }).catch(err=>{
@@ -50,16 +50,17 @@ const CreatePost = () =>{
     }
     return (
         <div>
-        <nav className="myBreadcrumb container #5e35b1 deep-purple darken-1">
+        <br/>
+        <nav className="myBreadcrumb container #607d8b blue-grey">
             <div class="nav-wrapper container">
             <div class="col s12">
-                <Link to="/" class="breadcrumb">The Gallery</Link>
+                <Link to="/" class="breadcrumb">BlogXtreme</Link>
                 <Link to="/profile" class="breadcrumb">Profile</Link>
-                <Link class="breadcrumb">Create Post</Link>
+                <Link class="breadcrumb">Create</Link>
             </div>
             </div>
         </nav>
-        <div className="card input-field post-card">
+        <div className="card input-field post-card #90a4ae blue-grey lighten-2">
             <h2>Create Post</h2>
             <input 
                 type="text" 
@@ -74,7 +75,7 @@ const CreatePost = () =>{
                 onChange={(e)=>setBody(e.target.value)} 
             />
             <div className="file-field input-field">
-                <div className="btn #5e35b1 deep-purple darken-1">
+                <div className="btn #607d8b blue-grey">
                     <span>Upload Image</span>
                     <input type="file" accept='image/*' onChange={(e)=>setImage(e.target.files[0])} />
                 </div>
@@ -102,7 +103,7 @@ const CreatePost = () =>{
                     </label>
                 </p>
             </div>
-            <button className="btn waves-effect waves-light #5e35b1 deep-purple darken-1"
+            <button className="btn waves-effect waves-light #607d8b blue-grey"
                 onClick={()=>postDetails()}
             >
                 Upload Post

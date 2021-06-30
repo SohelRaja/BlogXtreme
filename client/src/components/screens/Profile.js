@@ -56,7 +56,7 @@ const Profile = () => {
                 }else{
                     localStorage.setItem("user", JSON.stringify({...state, pic: result.pic}));
                     dispatch({type:"UPDATEPIC", payload:{pic: result.pic}});
-                    M.toast({html: "Profile pic updated!", classes: "#ab47bc purple lighten-1"});
+                    M.toast({html: "Profile pic updated!", classes: "#607d8b blue-grey"});
                 }
             })
         }
@@ -85,7 +85,7 @@ const Profile = () => {
             }else{
                 localStorage.setItem("user", JSON.stringify({...state, name: result.name}));
                 dispatch({type:"UPDATENAME", payload:{name: result.name}});
-                M.toast({html: "Profile name updated!", classes: "#ab47bc purple lighten-1"});
+                M.toast({html: "Profile name updated!", classes: "#607d8b blue-grey"});
             }
         })
     }
@@ -105,7 +105,7 @@ const Profile = () => {
             if(result.error){
                 M.toast({html: result.error, classes: "#f44336 red"});
             }else{
-                M.toast({html: result.message, classes: "#ab47bc purple lighten-1"});
+                M.toast({html: result.message, classes: "#607d8b blue-grey"});
             }
         })
     }
@@ -130,7 +130,7 @@ const Profile = () => {
                 }
             })
             setPosts(updatedMyPosts);
-            M.toast({html: "Updated to public mode", classes: "#ab47bc purple lighten-1"});
+            M.toast({html: "Updated to public mode", classes: "#607d8b blue-grey"});
         }).catch(err=>{
             console.log(err);
         });
@@ -156,7 +156,7 @@ const Profile = () => {
                 }
             })
             setPosts(updatedMyPosts);
-            M.toast({html: "Updated to private mode", classes: "#ab47bc purple lighten-1"});
+            M.toast({html: "Updated to private mode", classes: "#607d8b blue-grey"});
         }).catch(err=>{
             console.log(err);
         });
@@ -174,18 +174,19 @@ const Profile = () => {
                 return item._id !== result._id
             })
             setPosts(updatedMyPosts);
-            M.toast({html: "Successfully deleted", classes: "#ab47bc purple lighten-1"});
+            M.toast({html: "Successfully deleted", classes: "#607d8b blue-grey"});
         })
     }
     return (
         <div className="profile">
-            <div className="profile-card" style={{borderBottom:"2px solid #5e35b1"}}>
+            <br/>
+            <div className="profile-card" style={{borderBottom:"2px solid #ffffff"}}>
                 <div className="profile-card-plate">
                     <div className="profile-pic-plate">
                         <img className="profile-pic" src={state? state.pic: "loading.."} alt="profile-pic"/>
                         <div className="file-upload file-field input-field update-pic" style={{margin: "10px"}}>
-                            <div className="btn-floating #5e35b1 deep-purple darken-1 upload-pic-button">
-                                <i className="material-icons">photo_camera</i>
+                            <div className="btn-floating #ffffff white upload-pic-button">
+                                <i className="material-icons" style={{color: "#607d8b"}}>photo_camera</i>
                                 <input type="file" accept='image/*' onChange={(e)=>updatePhoto(e.target.files[0])} />
                             </div>
                             <div className="file-path-wrapper">
@@ -196,31 +197,17 @@ const Profile = () => {
                     <div className="profile-info">
                         <h5 className="profile-info-profilename">
                             {state? state.name : "loading..."}
-                            {
-                                state && (state.priority === "owner" || state.priority === "admin" || state.priority === "special") &&
-                                <i className="material-icons verified-acc-tag" data-tip="Verified Account" data-background-color="#5e35b1">verified_user</i> 
-                            }
                             <i  
                                 ref={profileDropdown}
                                 data-target='profile-dropdown'
                                 className="material-icons dropdown-trigger profile-setting-tag"
-                                data-tip="More" data-background-color="#5e35b1"
+                                data-tip="More" data-background-color="#607d8b"
                             >more_vert</i>
                             <ReactTooltip />
                         </h5>
-                        <h6 style={{color:"#7e57c2"}}>{state? state.email : "loading..."}</h6>
-                        {   
-                            state && (state.priority === "owner" || state.priority === "admin") && 
-                            <h6 className="priority-tag">
-                                <Link to="/admin">
-                                    You are the {state.priority}
-                                </Link>
-                            </h6>
-                        }
+                        <h6 style={{color:"#ffffff"}}>{state? state.email : "loading..."}</h6>
                         <div className="profile-sub-info">
-                            <h6><b style={{color: "#6a1b9a"}}>{myposts.length}</b> posts</h6>
-                            <h6><b style={{color: "#6a1b9a"}}>{state? state.followers.length : "0"}</b> followers</h6>
-                            <h6><b style={{color: "#6a1b9a"}}>{state? state.following.length : "0"}</b> following</h6>
+                            <h6 style={{color: "#ffffff"}}><b style={{color: "#ffffff"}}>{myposts.length}</b> posts</h6>
                         </div>
                         <div className="add-post-plate">
                             <Link to="/create"><i className="material-icons">add</i> <span>Add Post</span></Link>
@@ -234,31 +221,28 @@ const Profile = () => {
                     myposts.map(item=>{
                         return(
                             <div className="col s12 m6 profile-gallery-item" key={item._id}>
-                                <div className="card">
+                                <div className="card #90a4ae blue-grey lighten-2">
                                     <div className="card-image">
-                                        <Link to={`/mypost/${item._id}`}><img src={item.photo} alt={item.title} /></Link>
-                                        <Link to={`/mypost/${item._id}`}>
-                                            <span className="card-title">
-                                                {item.title.length > 10 ? item.title.substring(0,10):item.title.substring(0,item.title.length)}{item.title.length > 10?"...":""}
-                                            </span>
-                                        </Link>
+                                        <img src={item.photo} alt={item.title} />
+                                        <span className="card-title">
+                                            {item.title.length > 10 ? item.title.substring(0,10):item.title.substring(0,item.title.length)}{item.title.length > 10?"...":""}
+                                        </span>
                                         {item.privacy==="private"? 
-                                        <span className="btn-floating profile-lock waves-effect waves-light #ffffff white"
+                                        <span className="btn-floating profile-lock waves-effect waves-light #607d8b blue-grey"
                                             onClick={()=>makePublic(item._id)}
                                         ><i className="material-icons">lock</i></span>
-                                        :<span className="btn-floating profile-lock waves-effect waves-light #ffffff white"
+                                        :<span className="btn-floating profile-lock waves-effect waves-light #607d8b blue-grey"
                                             onClick={()=>makePrivate(item._id)}
                                         ><i className="material-icons">lock_open</i></span>}
                                         <span className="btn-floating halfway-fab waves-effect waves-light profile-delete modal-trigger"
                                             data-target="delete-post-modal"
                                             onClick={()=>setDeletePostInfo(item)}
                                         ><i className="material-icons">delete</i></span>
-                                        <Link to={`/editpost/${item._id}`}><span className="btn-floating halfway-fab waves-effect waves-light #5e35b1 deep-purple darken-1"><i className="material-icons">edit</i></span></Link>
+                                        <Link to={`/editpost/${item._id}`}><span className="btn-floating halfway-fab waves-effect waves-light #607d8b blue-grey"><i className="material-icons">edit</i></span></Link>
                                     </div>
                                     <div className="card-content">
-                                        <span style={{color:"#5e35b1"}}><b>{item.privacy==="private"? "Private Mode" : "Public Mode"}</b></span>
-                                        <p style={{color:"#e91e63"}}><b>{item.likes.length} likes</b></p>
-                                        <p>{item.body.length > 25 ? item.body.substring(0,25):item.body.substring(0,item.body.length)}{item.body.length > 25?"...":""}</p>
+                                        <span style={{color:"#ffffff"}}><b>{item.privacy==="private"? "Private Mode" : "Public Mode"}</b></span>
+                                        <p style={{color: "#ffffff"}}>{item.body.length > 25 ? item.body.substring(0,25):item.body.substring(0,item.body.length)}{item.body.length > 25?"...":""}</p>
                                     </div>
                                 </div>
                             </div>
@@ -266,7 +250,7 @@ const Profile = () => {
                     }) : "loading..."
                 }
             </div>
-            <div id="edit-name-modal" className="modal" ref={editNameModal} style={{color: "#5e35b1"}}>
+            <div id="edit-name-modal" className="modal" ref={editNameModal} style={{color: "#607d8b"}}>
                 <div className="modal-content">
                     <h4>Update Profile Name</h4>
                     <input 
@@ -291,7 +275,7 @@ const Profile = () => {
                    >Update</button>
                 </div>
             </div>
-            <div id="change-password-modal" className="modal" ref={changePasswordModal} style={{color: "#5e35b1"}}>
+            <div id="change-password-modal" className="modal" ref={changePasswordModal} style={{color: "#607d8b"}}>
                 <div className="modal-content">
                     <h4>Change Password</h4>
                     <input 
@@ -324,7 +308,7 @@ const Profile = () => {
                    >Change Password</button>
                 </div>
             </div>
-            <div id="delete-post-modal" className="modal" ref={deletePostModal} style={{color: "#5e35b1"}}>
+            <div id="delete-post-modal" className="modal" ref={deletePostModal} style={{color: "#607d8b"}}>
                 <div className="modal-content">
                     <h4>Delete Post</h4>
                     <h6 className="truncate">Do you want to delete <b>{deletePostInfo.title}</b> ?</h6>
@@ -346,12 +330,6 @@ const Profile = () => {
             </div>
             <div>
                 <ul id='profile-dropdown' className='dropdown-content'>
-                    {
-                        state && (state.priority === "owner" || state.priority === "admin") && 
-                        <li key="0">
-                            <Link to="/admin"><i className="material-icons">ac_unit</i>Admin Panel</Link>
-                        </li>
-                    }
                     <li key="1">
                         <Link to="/create">Create Post</Link>
                     </li>
@@ -372,7 +350,7 @@ const Profile = () => {
                         onClick={()=>{
                             localStorage.clear();
                             dispatch({type: "CLEAR"});
-                            M.toast({html: "Successfully logged out.", classes: "#ab47bc purple lighten-1"});
+                            M.toast({html: "Successfully logged out.", classes: "#607d8b blue-grey"});
                             history.push('/signin');
                         }}
                     >

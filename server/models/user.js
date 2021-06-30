@@ -24,12 +24,6 @@ const userSchema = new mongoose.Schema({
     picid:{
         type: String,
         default: "undefined"
-    },
-    followers: [{type: ObjectId, ref: "User"}],
-    following: [{type: ObjectId, ref: "User"}],
-    priority: {
-        type: String,
-        default: "normal"
     }
 });
 

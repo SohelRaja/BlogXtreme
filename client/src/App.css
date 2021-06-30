@@ -3,14 +3,24 @@ html{
     padding: 0;
 }
 .mynavbar a{
-    color: #5e35b1 !important;
+    color: #ffffff !important;
 }
 .sidenav-info{
-    color: #5e35b1 !important;
+    color: #ffffff !important;
 }
 .collection .collection-item {
     display: block;
     width: 100%;
+}
+.intro-home{
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding: 20px;
+    text-align: center;
+    border: 2px solid #ffffff;
+    background-color: #90a4ae;
+    color: #ffffff;
 }
 /* Auth page style */
 .mycard{
@@ -24,7 +34,7 @@ html{
     margin: 10px auto;
 }
 .auth-card h2{
-    color: #5e35b1;
+    color: #ffffff;
     font-family: 'Ruthie', cursive;
 }
 .auth-card-signin{
@@ -35,24 +45,38 @@ html{
     margin: 10px auto;
 }
 .auth-card-signin h2{
-    color: #5e35b1;
+    color: #ffffff;
     font-family: 'Ruthie', cursive;
 }
+input[type=text]:focus {
+    border-bottom: 1px solid #607d8b !important;
+    box-shadow: 0 1px 0 0 #607d8b !important;
+}
+.input-field input[type=text]{
+    color: #ffffff;
+    border-bottom: 1px solid #607d8b !important;
+    box-shadow: 0 1px 0 0 #ffffff !important;
+}
+.input-field input[type=password]{
+    color: #ffffff;
+    border-bottom: 1px solid #607d8b !important;
+    box-shadow: 0 1px 0 0 #ffffff !important;
+}
 .input-field input[type=text]:focus {
-    border-bottom: 1px solid #5e35b1 !important;
-    box-shadow: 0 1px 0 0 #5e35b1 !important;
+    border-bottom: 1px solid #ffffff !important;
+    box-shadow: 0 1px 0 0 #ffffff !important;
 }
 .input-field input[type=password]:focus {
-    border-bottom: 1px solid #5e35b1 !important;
-    box-shadow: 0 1px 0 0 #5e35b1 !important;
+    border-bottom: 1px solid #ffffff !important;
+    box-shadow: 0 1px 0 0 #ffffff !important;
 }
 .valid{
-    border-bottom: 1px solid #5e35b1 !important;
-    box-shadow: 0 1px 0 0 #5e35b1 !important;
-    color: #5e35b1 !important;
+    border-bottom: 1px solid #ffffff !important;
+    box-shadow: 0 1px 0 0 #ffffff !important;
+    color: #ffffff !important;
 }
 .sign-link a{
-    color: #5e35b1;
+    color: #ffffff;
     text-decoration: underline;
 }
 /* Post page style */
@@ -61,20 +85,24 @@ html{
     max-width: 450px;
     text-align: center;
     margin: 30px auto;
+    color: #ffffff !important;
 }
 .post-card h2{
-    color: #5e35b1;
+    color: #ffffff;
     font-family: 'Ruthie', cursive;
 }
 .privacy-button{
     display: flex;
     justify-content: space-around;
 }
+.privacy-button span{
+    color: #ffffff;
+}
 [type="radio"].with-gap:checked+span:before, [type="radio"].with-gap:checked+span:after {
-    border: 2px solid #5e35b1;
+    border: 2px solid #607d8b;
 }
 [type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:after {
-    background-color: #5e35b1;
+    background-color: #607d8b;
 }
 /* Profile page style */
 .profile{
@@ -87,7 +115,7 @@ html{
 .profile-card-plate{
     display: flex;
     justify-content: space-around;
-    height: 225px;
+    height: 180px;
 }
 .profile-pic-plate{
     top: 100px;
@@ -96,7 +124,7 @@ html{
     width: 140px;
     height: 140px;
     border-radius: 70px;
-    border: 2px solid #5e35b1;
+    border: 3px solid #ffffff;
 }
 .profile-info{
     justify-content: center;
@@ -106,7 +134,7 @@ html{
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #5e35b1;
+    color: #ffffff;
 }
 .profile-setting-tag{
     margin-left: 10px;
@@ -116,12 +144,7 @@ html{
     width: 200px !important;
 }
 .dropdown-content li span,.dropdown-content li a {
-    color: #5e35b1 !important;
-}
-.profile-sub-info{
-    display: flex;
-    justify-content: space-between;
-    width: 110%;
+    color: #607d8b !important;
 }
 .priority-tag{
     display: flex;
@@ -167,13 +190,13 @@ html{
 }
 .profile-delete{
     position: absolute !important;
-    left: 42% !important;
+    left: 43% !important;
     bottom: -20px !important;
     background-color: #e53935 !important;
     color: white;
 }
 .profile-lock i{
-    color: #5e35b1 !important;
+    color: #fff !important;
 }
 .file-path-wrapper{
     opacity: 0;
@@ -221,17 +244,18 @@ html{
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 3px solid #5e35b1;
+    border: 3px solid #ffffff;
     display: flex;
     align-items: center;
 }
 .home-card-title{
     margin: 0;
+    color: #ffffff;
 }
 .home-card-title a{
     margin: 0;
     margin-left: 15px;
-    color: #5e35b1;
+    color: #ffffff;
 }
 .verified-acc-tag{
     margin-left: 7px;
@@ -245,10 +269,6 @@ html{
     color: #e6bd39;
     text-shadow: -2px -2px 2px rgba(255,255,255,.1), 2px 2px 2px rgba(0,0,0,.5);
 }
-input[type=text]:focus {
-    border-bottom: 1px solid #5e35b1 !important;
-    box-shadow: 0 1px 0 0 #5e35b1 !important;
-}
 .love-icon-plate{
     margin: 0;
     padding: 0;
@@ -258,30 +278,12 @@ input[type=text]:focus {
     font-weight: 500;
     color: #5e35b1;
 }
-.love-icon{
-    color: #e53935 !important;
-    cursor: pointer;
-    font-size: 35px;
-}
-.love-icon-unlike{
-    color: #5e35b1 !important;
-    cursor: pointer;
-    font-size: 35px;
-}
 .delete-icon{
-    color: #e53935 !important;
+    color: #ffffff !important;
     position: absolute !important;
     right: 24px !important;
     top: 20px !important;
     cursor: pointer;
-}
-.comment-icon{
-    position: absolute;
-    left: 31%;
-    color: #5e35b1 !important;
-    cursor: pointer;
-    font-size: 35px;
-    margin: 0;
 }
 .update-pic{
     width: 40px;
@@ -292,21 +294,25 @@ input[type=text]:focus {
 .add-post-plate{
     width: 200px;
     height: 35px;
-    border: 2px solid #5e35b1;
+    border: 2px solid #ffffff;
     border-radius: 10px;
     margin: 10px auto;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #5e35b1;
+    color: #607d8b;
     font-weight: 600;
+    transition: all 0.5s;
+}
+.add-post-plate:hover{
+    background-color: #607d8b;
 }
 .add-post-plate a{
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #5e35b1;
+    color: #ffffff;
     width: 100%;
 }
 .comment-plate{
@@ -378,7 +384,7 @@ input[type=text]:focus {
         height: 430px;
     }
     .profile-card{
-        height: 430px;
+        height: 350px;
     }
     .profile-card-plate{
         display: grid;
@@ -388,12 +394,6 @@ input[type=text]:focus {
     }
     .profile-info{
         text-align: center;
-    }
-    .profile-sub-info{
-        display: flex;
-        justify-content: space-between;
-        width: 90%;
-        margin: 0 auto;
     }
     .upload-pic-button{
         display: flex;

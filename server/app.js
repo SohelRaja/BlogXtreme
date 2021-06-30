@@ -13,10 +13,10 @@ mongoose.connect(MONGOURI,{
     useUnifiedTopology: true
 });
 mongoose.connection.on('connected',()=>{
-    console.log(`Connected to MongoDB`);
+    console.log(`Ohh Yeah! Connected to MongoDB`);
 });
 mongoose.connection.on('error',(err)=>{
-    console.log(`Error Connecting ${err}`);
+    console.log(`Error Connecting ----> ${err}`);
 });
 
 // Registering the mongoose model
@@ -30,14 +30,7 @@ app.use(require('./routes/auth'));
 app.use(require('./routes/post'));
 app.use(require('./routes/user'));
 
-if(process.env.NODE_ENV === "production"){
-    app.use(express.static('client/build'));
-    const path = require('path');
-    app.get('*',(req,res)=>{
-        res.sendFile(path.resolve(__dirname,'client','index.html'))
-    })
-}
-
+// App Start Point
 app.listen(PORT, ()=>{
     console.log(`Server is running on ${PORT}`)
 })

@@ -17,31 +17,9 @@ const requireLogin = require('../middlewares/requireLogin');
 const router = express.Router();
 const Post = mongoose.model('Post');
 
-// router.get('/numberofposts', requireLogin, (req,res)=>{
-//     Post.find()
-//     .then((posts)=>{
-//         var allPost = posts.length;
-//         var pri = 0;
-//         posts.map(item=>{
-//             if(item.privacy === "private"){
-//                 pri = pri + 1;
-//             }
-//         })
-//         var postData = {
-//             allPost,
-//             private: pri
-//         }
-//         res.json({posts: postData})
-//     })
-//     .catch((err)=>{
-//         console.log(err);
-//     })
-// });
-
 router.get('/allpost', requireLogin, (req,res)=>{
     Post.find({privacy: "public"})
-    .populate("postedBy", "_id name pic priority")
-    .populate("comments.postedBy", "_id name priority")
+    .populate("postedBy", "_id name pic")
     .sort('-createdAt') //Descending Order '-createdAt'
     .then((posts)=>{
         res.json({posts})
@@ -51,18 +29,6 @@ router.get('/allpost', requireLogin, (req,res)=>{
     })
 });
 
-router.get('/subpost', requireLogin, (req,res)=>{
-    Post.find({postedBy: {$in: req.user.following}, privacy: "public"})
-    .populate("postedBy", "_id name pic priority")
-    .populate("comments.postedBy", "_id name priority")
-    .sort('-createdAt')
-    .then((posts)=>{
-        res.json({posts})
-    })
-    .catch((err)=>{
-        console.log(err);
-    })
-});
 
 router.post('/createpost', requireLogin, async (req,res)=>{
     const {title, body, pic, privacy} = req.body;
@@ -105,7 +71,6 @@ router.post('/createpost', requireLogin, async (req,res)=>{
 router.get('/mypost', requireLogin, (req,res)=>{
     Post.find({postedBy: req.user._id})
     .populate("postedBy","_id name")
-    .populate("comments.postedBy","_id name")
     .sort('-createdAt')
     .then((myposts)=>{
         res.json({myposts});
@@ -143,86 +108,6 @@ router.put('/updatepost', requireLogin, (req,res)=>{
         })
     }
 });
-router.put('/like',requireLogin,(req,res)=>{
-    Post.findByIdAndUpdate(req.body.postId,{
-        $push: {likes: req.user._id}
-    },{
-        new: true
-    }).populate("comments.postedBy", "_id name pic")
-    .populate("postedBy", "_id name pic")
-    .exec((err,result)=>{
-        if(err){
-            return res.status(422).json({error:err});
-        }else{
-            res.json(result);
-        }
-    })
-});
-router.put('/unlike',requireLogin,(req,res)=>{
-    Post.findByIdAndUpdate(req.body.postId,{
-        $pull: {likes: req.user._id}
-    },{
-        new: true
-    }).populate("comments.postedBy", "_id name pic")
-    .populate("postedBy", "_id name pic")
-    .exec((err,result)=>{
-        if(err){
-            return res.status(422).json({error:err});
-        }else{
-            res.json(result);
-        }
-    })
-});
-router.put('/comment',requireLogin,(req,res)=>{
-    const comment = {
-        text: req.body.text,
-        postedBy: req.user._id
-    }
-    Post.findByIdAndUpdate(req.body.postId,{
-        $push: {comments: comment}
-    },{
-        new: true
-    })
-    .populate("comments.postedBy", "_id name pic")
-    .populate("postedBy", "_id name pic")
-    .exec((err,result)=>{
-        if(err){
-            return res.status(422).json({error:err});
-        }else{
-            res.json(result);
-        }
-    })
-});
-router.delete('/deletecomment/:postId/:commentId/:authorId',requireLogin,(req,res)=>{
-    Post.findById(req.params.postId)
-    .populate("postedBy","_id name pic")
-    .populate("comments.postedBy","_id")
-    .exec((err,post)=>{
-        if(err || !post){
-            return res.status(422).json({error:err})
-        }
-        if(post.postedBy._id.toString() === req.user._id.toString() || req.params.authorId === req.user._id.toString()){
-            var comments = post.comments.filter(item=>{
-            if(req.params.commentId !== item._id.toString()){
-                return item
-            }
-            })
-            Post.findByIdAndUpdate(req.params.postId,{
-                comments: comments
-            },{
-                new: true
-            }).populate("postedBy","_id name pic")
-            .populate("comments.postedBy","_id name pic")
-            .exec((err,result)=>{
-                if(err){
-                    return res.status(422).json({error:err});
-                }else{
-                    res.json(result);
-                }
-            })
-        }
-    })
-})
 router.put('/makepublic',requireLogin,(req,res)=>{
     Post.findByIdAndUpdate(req.body.postId,{
         privacy: "public"
@@ -252,28 +137,24 @@ router.put('/makeprivate',requireLogin,(req,res)=>{
 
 router.delete('/deletepost/:postId',requireLogin,(req,res)=>{
     Post.findById(req.params.postId)
-    .populate("postedBy","_id priority")
+    .populate("postedBy","_id")
     .exec((err,post)=>{
         if(err || !post){
             return res.status(422).json({error:err})
         }
-        if((post.postedBy._id.toString() === req.user._id.toString()) || (req.user.priority === "admin") || (req.user.priority === "owner")){
-            if((post.postedBy.priority === "normal") || (post.postedBy.priority === "admin") || (post.postedBy.priority === "owner" && req.user.priority === "owner")){
-                cloudinary.uploader.destroy(post.photopublicid, function(error,response) {
-                    if(error){
-                        return res.status(422).json({error})
-                    }else{
-                        post.delete()
-                        .then(result=>{
-                            res.json(result)
-                        }).catch(err=>{
-                            console.log(err)
-                        })
-                    }
-                });
-            }else{
-                return res.status(422).json({error:"You don't have access to do!"});
-            }
+        if((post.postedBy._id.toString() === req.user._id.toString())){
+            cloudinary.uploader.destroy(post.photopublicid, function(error,response) {
+                if(error){
+                    return res.status(422).json({error})
+                }else{
+                    post.delete()
+                    .then(result=>{
+                        res.json(result)
+                    }).catch(err=>{
+                        console.log(err)
+                    })
+                }
+            });
         }else{
             return res.status(422).json({error:"You don't have access to do!"});
         }

@@ -26,10 +26,7 @@ module.exports = (req,res,next)=>{
                 _id: userData._id,
                 email: userData.email,
                 name: userData.name,
-                followers: userData.followers,
-                following: userData.following,
-                pic: userData.pic,
-                priority: userData.priority
+                pic: userData.pic
             }
             req.user = userData;
             next();

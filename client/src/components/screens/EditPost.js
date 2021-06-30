@@ -54,7 +54,7 @@ const EditPost = () =>{
                     history.push('/profile');
                 }
             }else{
-                M.toast({html: "Updated post successfully.", classes: "#ab47bc purple lighten-1"});
+                M.toast({html: "Updated post successfully.", classes: "#607d8b blue-grey"});
                 history.push('/profile');
             }
         }).catch(err=>{
@@ -66,16 +66,17 @@ const EditPost = () =>{
     }
     return (
         <div>
-            <nav className="myBreadcrumb container #5e35b1 deep-purple darken-1">
-                <div class="nav-wrapper container">
-                <div class="col s12">
-                    <Link to="/" class="breadcrumb">The Gallery</Link>
-                    <Link to="/profile" class="breadcrumb">Profile</Link>
-                    <Link class="breadcrumb">Edit Post</Link>
+            <br/>
+            <nav className="myBreadcrumb container #607d8b blue-grey">
+                <div className="nav-wrapper container">
+                <div className="col s12">
+                    <Link to="/" className="breadcrumb">BlogXtreme</Link>
+                    <Link to="/profile" className="breadcrumb">Profile</Link>
+                    <Link className="breadcrumb">Edit</Link>
                 </div>
                 </div>
             </nav>
-            <div className="card input-field post-card">
+            <div className="card input-field post-card #90a4ae blue-grey lighten-2">
                 <h2>Edit Post</h2>
                 <h5>{thisPostData.title}</h5>
                 <input 
@@ -91,12 +92,12 @@ const EditPost = () =>{
                     onChange={(e)=>setBody(e.target.value)} 
                 />
                 <div className="edit-form-buttons">
-                    <button className="btn waves-effect waves-light #5e35b1 deep-purple darken-1"
+                    <button className="btn waves-effect waves-light #607d8b blue-grey"
                         onClick={()=>Cancel()}
                     >
                         Cancel
                     </button>
-                    <button className="btn waves-effect waves-light #5e35b1 deep-purple darken-1"
+                    <button className="btn waves-effect waves-light #607d8b blue-grey"
                         onClick={()=>updatePost()}
                     >
                         Update Post
